@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#062c24"
+    >
+
+    <meta
+        name="description"
+        content="Beautiful Islamic Durood Sharif Counter"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="Durood Counter"
+    >
+
+    <title>Durood Sharif Counter</title>
+
+    <!-- PWA MANIFEST -->
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
+    <!-- Optional iOS icon -->
+    <link
+        rel="apple-touch-icon"
+        href="icons/icon-192.png"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --green-dark: #062c24;
+            --green: #0b5d4b;
+            --green-light: #12816a;
+            --gold: #d4af5a;
+            --gold-light: #f1d58b;
+            --cream: #fffaf0;
+            --white: #ffffff;
+            --text: #183b33;
+        }
+
+        html {
+            min-height: 100%;
+            background: #f8f3e5;
+        }
+
+        body {
+            min-height: 100vh;
+
+            min-height: 100dvh;
+
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(212,175,90,.16),
+                    transparent 32%
+                ),
+                linear-gradient(
+                    145deg,
+                    #f8f3e5,
+                    #fffdf8 45%,
+                    #edf7f2
+                );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding:
+                max(20px, env(safe-area-inset-top))
+                max(20px, env(safe-area-inset-right))
+                max(20px, env(safe-area-inset-bottom))
+                max(20px, env(safe-area-inset-left));
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button {
+            font: inherit;
+        }
+
+
+        /* MAIN */
+
+        .counter-wrapper {
+            width: 100%;
+            max-width: 650px;
+        }
+
+
+        /* CARD */
+
+        .counter-card {
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.97),
+                    rgba(248,252,249,.96)
+                );
+
+            border: 1px solid rgba(212,175,90,.45);
+
+            border-radius: 30px;
+
+            padding: 34px 30px 25px;
+
+            box-shadow:
+                0 10px 25px rgba(6,44,36,.08),
+                0 25px 60px rgba(6,44,36,.12);
+
+            text-align: center;
+        }
+
+
+        .counter-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            top: -125px;
+            left: -115px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(212,175,90,.20);
+
+            pointer-events: none;
+        }
+
+        .counter-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 200px;
+            height: 200px;
+
+            bottom: -120px;
+            right: -100px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(11,93,75,.15);
+
+            pointer-events: none;
+        }
+
+
+        /* HEADER */
+
+        .islamic-symbol {
+            color: var(--gold);
+
+            font-size: 28px;
+
+            line-height: 1;
+
+            margin-bottom: 10px;
+        }
+
+        .title {
+            color: var(--green-dark);
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            letter-spacing: -.5px;
+
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #71877f;
+
+            font-size: 13px;
+
+            margin-bottom: 27px;
+        }
+
+
+        /* DUROOD */
+
+        .durood-box {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fdf9ed,
+                    #fffdf8
+                );
+
+            border: 1px solid rgba(212,175,90,.42);
+
+            border-radius: 22px;
+
+            padding: 28px 20px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.9),
+                0 6px 18px rgba(6,44,36,.045);
+        }
+
+        .durood-label {
+            color: var(--gold);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 17px;
+        }
+
+        .durood-text {
+            direction: rtl;
+
+            color: var(--green-dark);
+
+            font-family:
+                "Amiri",
+                "Noto Naskh Arabic",
+                "Traditional Arabic",
+                serif;
+
+            font-size: clamp(25px, 5vw, 38px);
+
+            font-weight: 700;
+
+            line-height: 2;
+
+            text-align: center;
+        }
+
+
+        /* CURRENT COUNT */
+
+        .counter-label {
+            color: #789087;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 6px;
+        }
+
+        .count {
+            color: var(--green-dark);
+
+            font-size: 64px;
+
+            font-weight: 900;
+
+            line-height: 1;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 20px;
+
+            font-variant-numeric: tabular-nums;
+
+            transition: transform .15s ease;
+        }
+
+        .count.pop {
+            transform: scale(1.08);
+        }
+
+
+        /* BUTTON */
+
+        .count-btn {
+            width: 180px;
+            height: 180px;
+
+            border-radius: 50%;
+
+            border: 8px solid rgba(212,175,90,.28);
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    #148a72,
+                    #075542 65%,
+                    #043b30
+                );
+
+            color: white;
+
+            cursor: pointer;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 20px;
+
+            box-shadow:
+                0 8px 0 #04352b,
+                0 15px 30px rgba(6,44,36,.22);
+
+            transition:
+                transform .12s ease,
+                box-shadow .12s ease;
+
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        .count-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 0 #04352b,
+                0 18px 34px rgba(6,44,36,.25);
+        }
+
+        .count-btn:active {
+            transform: translateY(7px);
+
+            box-shadow:
+                0 2px 0 #04352b,
+                0 7px 18px rgba(6,44,36,.20);
+        }
+
+        .count-btn:focus-visible {
+            outline: 3px solid rgba(212,175,90,.55);
+            outline-offset: 4px;
+        }
+
+        .tap-icon {
+            font-size: 34px;
+
+            margin-bottom: 5px;
+        }
+
+        .tap-text {
+            font-size: 14px;
+
+            font-weight: 800;
+
+            letter-spacing: .4px;
+        }
+
+
+        /* TOTAL */
+
+        .total-box {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #062c24,
+                    #0b5d4b
+                );
+
+            border-radius: 19px;
+
+            padding: 18px 20px;
+
+            color: white;
+
+            margin-top: 10px;
+
+            box-shadow:
+                0 8px 20px rgba(6,44,36,.16);
+
+            overflow: hidden;
+        }
+
+        .total-box::after {
+            content: "✦";
+
+            position: absolute;
+
+            right: 17px;
+            top: 8px;
+
+            color: rgba(241,213,139,.35);
+
+            font-size: 24px;
+        }
+
+        .total-label {
+            color: #c9ddd7;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 5px;
+        }
+
+        .total-count {
+            color: var(--gold-light);
+
+            font-size: 30px;
+
+            font-weight: 900;
+
+            line-height: 1;
+
+            font-variant-numeric: tabular-nums;
+        }
+
+        .total-note {
+            color: rgba(255,255,255,.55);
+
+            font-size: 10px;
+
+            margin-top: 6px;
+        }
+
+
+        /* CREATED BY */
+
+        .created-by {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 5px 10px;
+
+            border: 1px solid rgba(212,175,90,.30);
+
+            border-radius: 999px;
+
+            color: #789087;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: .5px;
+
+            background: rgba(255,255,255,.5);
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .counter-card {
+                padding: 27px 16px 20px;
+
+                border-radius: 24px;
+            }
+
+            .title {
+                font-size: 25px;
+            }
+
+            .subtitle {
+                margin-bottom: 21px;
+            }
+
+            .durood-box {
+                padding: 22px 13px;
+
+                border-radius: 18px;
+            }
+
+            .durood-text {
+                font-size: 25px;
+
+                line-height: 1.9;
+            }
+
+            .count {
+                font-size: 54px;
+            }
+
+            .count-btn {
+                width: 155px;
+                height: 155px;
+            }
+
+            .tap-icon {
+                font-size: 30px;
+            }
+
+            .total-box {
+                padding: 16px;
+            }
+
+            .total-count {
+                font-size: 27px;
+            }
+        }
+
+
+        @media (max-width: 380px) {
+
+            .counter-card {
+                padding: 23px 12px 17px;
+            }
+
+            .durood-text {
+                font-size: 22px;
+            }
+
+            .count-btn {
+                width: 140px;
+                height: 140px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <main class="counter-wrapper">
+
+        <section class="counter-card">
+
+            <div class="islamic-symbol">
+                ☾ ✦
+            </div>
+
+            <h1 class="title">
+                Durood Sharif
+            </h1>
+
+            <p class="subtitle">
+                بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+            </p>
+
+
+            <!-- DUROOD SHARIF -->
+
+            <div class="durood-box">
+
+                <div class="durood-label">
+                    دُرُود شَرِيف
+                </div>
+
+                <div class="durood-text">
+                    اَللّٰھُمَّ صَلِّ عَلٰی سَیِّدِنَا وَمَوْلٰنَا مُحَمَّدٍ وَّعَلٰی آلِ سَیِّدِنَا وَمَوْلٰنَا مُحَمَّدٍ وَّبَارِكْ وَسَلِّمْ
+                </div>
+
+            </div>
+
+
+            <!-- CURRENT SESSION COUNT -->
+
+            <div class="counter-label">
+                CURRENT COUNT
+            </div>
+
+            <div
+                class="count"
+                id="count"
+            >
+                0
+            </div>
+
+
+            <!-- COUNT BUTTON -->
+
+            <button
+                class="count-btn"
+                id="countBtn"
+                type="button"
+                aria-label="Count Durood"
+            >
+
+                <span class="tap-icon">
+                    📿
+                </span>
+
+                <span class="tap-text">
+                    TAP TO COUNT
+                </span>
+
+            </button>
+
+
+            <!-- PERMANENT TOTAL -->
+
+            <div class="total-box">
+
+                <div class="total-label">
+                    TOTAL DUROOD
+                </div>
+
+                <div
+                    class="total-count"
+                    id="totalCount"
+                >
+                    0
+                </div>
+
+                <div class="total-note">
+                    Your lifetime total is saved on this device.
+                </div>
+
+            </div>
+
+
+            <!-- CREATED BY -->
+
+            <div class="created-by">
+                Created by Mushahid Raza
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /* =========================================
+           DUROOD SHARIF COUNTER
+           ========================================= */
+
+        const countElement =
+            document.getElementById("count");
+
+        const totalElement =
+            document.getElementById("totalCount");
+
+        const countButton =
+            document.getElementById("countBtn");
+
+
+        /*
+         * Current session count
+         * Always starts from 0
+         */
+
+        let currentCount = 0;
+
+
+        /*
+         * Permanent total
+         * Stored on this device
+         */
+
+        let totalCount = Number(
+            localStorage.getItem("duroodTotal") || 0
+        );
+
+
+        /*
+         * Display saved total
+         */
+
+        totalElement.textContent =
+            totalCount.toLocaleString("en-IN");
+
+
+        /*
+         * Add one Durood
+         */
+
+        function addDurood() {
+
+            currentCount++;
+
+            totalCount++;
+
+
+            /* Current session */
+
+            countElement.textContent =
+                currentCount.toLocaleString("en-IN");
+
+
+            /* Permanent total */
+
+            totalElement.textContent =
+                totalCount.toLocaleString("en-IN");
+
+
+            /*
+             * Save total
+             */
+
+            localStorage.setItem(
+                "duroodTotal",
+                String(totalCount)
+            );
+
+
+            /*
+             * Small animation
+             */
+
+            countElement.classList.remove("pop");
+
+            void countElement.offsetWidth;
+
+            countElement.classList.add("pop");
+        }
+
+
+        /*
+         * Button click
+         */
+
+        countButton.addEventListener(
+            "click",
+            addDurood
+        );
+
+
+        /*
+         * Keyboard support
+         */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.code === "Space" ||
+                    event.code === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    addDurood();
+                }
+
+            }
+        );
+
+
+        /*
+         * =========================================
+         * REGISTER SERVICE WORKER
+         * =========================================
+         *
+         * service-worker.js must be in the
+         * same folder as index.html.
+         *
+         */
+
+        if ("serviceWorker" in navigator) {
+
+            window.addEventListener(
+                "load",
+                function() {
+
+                    navigator.serviceWorker
+                        .register("./service-worker.js")
+                        .then(function(registration) {
+
+                            console.log(
+                                "PWA Service Worker registered:",
+                                registration.scope
+                            );
+
+                        })
+                        .catch(function(error) {
+
+                            console.log(
+                                "Service Worker registration failed:",
+                                error
+                            );
+
+                        });
+
+                }
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>
